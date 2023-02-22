@@ -85,16 +85,20 @@
 			             <outputFormat>HTML</outputFormat>
 			        </outputFormats>
 			    </configuration>
-			</plugin>						
-		</plugins>
-
+			</plugin>
+			
 			<!--                   Dependency Check Plugin                   -->
 			<plugin>
 			    <groupId>org.owasp</groupId>
 			    <artifactId>dependency-check-maven</artifactId>
 			    <version>6.1.6</version>
 			    <configuration>
-			     <format>ALL</format>		
+			     <format>ALL</format>
+				</configuration>
+			</plugin>									
+		</plugins>
+
+		
 	</build>
 
 </project>
