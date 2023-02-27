@@ -95,16 +95,16 @@ pipeline {
               },
               "Kubesec Scan": {
                 sh "bash kubesec-scan.sh"
-            }
-           ) 
+              }
+            ) 
           }
         }
 
         stage('Kubernetes Deployment - DEV') {
-        steps {
-          parallel(
-            "Deployment": {
-              withKubeConfig([credentialsId: 'kubeconfig']) {
+          steps {
+            parallel(
+              "Deployment": {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
                 sh "bash k8s-deployment.sh"
               }
             },
