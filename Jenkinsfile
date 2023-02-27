@@ -31,11 +31,24 @@ pipeline {
         }
       }
 
-      stage('Vunlnerability Scan - Docker') {
+//      stage('Vunlnerability Scan - Docker') {
+//        steps {
+//          sh "mvn dependency-check:check"
+//        }
+//      }
+
+       stage('Vunlnerability Scan - Docker') {
         steps {
-          sh "mvn dependency-check:check"
+          parallel(
+            "Dependency Scan": {
+              sh "mvn dependency-check:check"
+            },
+            "Trivy Scan":{
+              sh "bash trivy-docker-image-scan.sh"
+            }
+          )
         }
-      }
+      }     
 
       stage('Docker Build and Push') {
         steps {
@@ -56,7 +69,7 @@ pipeline {
         }
       }
 
-      
+
   } 
       
   post {
