@@ -162,7 +162,7 @@ pipeline {
       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
 
       // Use sendNotification.groovy from shared library and provide current build result as parameter
-      sendNotifications currentBuild.result
+      sendNotification currentBuild.result
     }
   }
 
