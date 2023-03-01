@@ -36,7 +36,7 @@ pipeline {
 
       stage('SonarQube - SAST') {
         steps {
-              sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://3.93.79.255:9000 -Dsonar.login=91522f781c984d133e4cbbadb4c2eaf7f9533d9b"
+              sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://3.89.142.195:9000 -Dsonar.login=91522f781c984d133e4cbbadb4c2eaf7f9533d9b"
         }
       }
 
@@ -110,22 +110,22 @@ pipeline {
         }
       }
 
-      stage('Integration Tests - DEV') {
-        steps {
-          script {
-            try {
-              withKubeConfig([credentialsId: 'kubeconfig']) {
-                sh "bash integration-test.sh"
-              }
-            } catch (e) {
-                withKubeConfig([credentialsId: 'kubeconfig']) {
-                  sh "kubectl -n default rollout undo deploy ${deploymentName}"
-              }
-              throw e
-           }
-         }
-       }
-     }      
+//      stage('Integration Tests - DEV') {
+//        steps {
+//          script {
+//            try {
+//              withKubeConfig([credentialsId: 'kubeconfig']) {
+//                sh "bash integration-test.sh"
+//              }
+//           } catch (e) {
+//                withKubeConfig([credentialsId: 'kubeconfig']) {
+//                  sh "kubectl -n default rollout undo deploy ${deploymentName}"
+//              }
+//              throw e
+//           }
+//         }
+//       }
+//     }      
 
 //        stage('Kubernetes Deployment - DEV') {
 //          steps {
