@@ -1,3 +1,5 @@
+@Library('slack') _
+
 pipeline {
   agent any
 
@@ -69,6 +71,12 @@ pipeline {
           sh 'sudo docker build -t rupesh91609/numeric-app:""$GIT_COMMIT"" .'
           sh 'docker push rupesh91609/numeric-app:""$GIT_COMMIT"" '
          }
+        }
+      }
+
+      stage('Testing Slack') {
+        steps {
+          sh 'exit 0'
         }
       }
 
@@ -152,6 +160,9 @@ pipeline {
       junit 'target/surefire-reports/*.xml'
       jacoco execPattern: 'target/jacoco.exec'
       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+
+      // Use sendNotification.groovy from shared library and provide current build result as parameter
+      sendNotifications currentBuild.result
     }
   }
 
