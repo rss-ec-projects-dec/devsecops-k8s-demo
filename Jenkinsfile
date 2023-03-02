@@ -38,7 +38,7 @@ pipeline {
 
       stage('SonarQube - SAST') {
         steps {
-              sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://3.89.142.195:9000 -Dsonar.login=91522f781c984d133e4cbbadb4c2eaf7f9533d9b"
+              sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://54.167.168.57:9000 -Dsonar.login=91522f781c984d133e4cbbadb4c2eaf7f9533d9b"
         }
       }
 
@@ -74,11 +74,11 @@ pipeline {
         }
       }
 
-      stage('Testing Slack') {
-        steps {
-          sh 'exit 0'
-        }
-      }
+//      stage('Testing Slack') {
+//        steps {
+//          sh 'exit 0'
+//        }
+//      }
 
 //      stage('Vulnerability Scan - Kubernetes') {
 //        steps {
@@ -115,6 +115,14 @@ pipeline {
             sh "sed -i 's#replace#rupesh91609/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
             sh "kubectl apply -f k8s_deployment_service.yaml"
           }
+        }
+      }
+
+      stage('Promote to PROD?') {
+        steps {
+           timeout(time:2, unit: 'DAYS') {
+            input 'Do you want to Approve the Deploymeny to production environment/namespace?'
+           }
         }
       }
 
